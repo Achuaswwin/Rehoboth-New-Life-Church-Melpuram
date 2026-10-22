@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Rehoboth New Life Church | Melpuram, Pacode</title>
+<meta name="description" content="Rehoboth New Life Church (Rehoboth New Life Ministries), Melpuram, Pacode. Weekly worship, Bible study, fasting prayer, youth and women's fellowship led by Pastor Sathyadas.">
+<!-- Favicon fallback -->
+<link rel="icon" href="https://placehold.co/100x100/0b1628/f59e0b?text=RNLC">
+
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com/3.4.17"></script>
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<script>
+tailwind.config={
+  darkMode:'class',
+  theme:{
+    extend:{
+      colors:{
+        navy:{800:'#10223d',900:'#0b1628',950:'#050a14'},
+        gold:{300:'#fde047',400:'#f59e0b',500:'#d97706',600:'#b45309'}
+      },
+      fontFamily:{
+        sans:['Inter','sans-serif'],
+        serif:['Cinzel','serif']
+      }
+    }
+  }
+}
+</script>
+
+<style>
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  --bg:#faf8f5;
+  --fg:#1e293b;
+  --muted:#475569;
+  --card:#ffffff;
+  --line:#e5e7eb;
+  --head:#0b1628;
+  --gold-glow:rgba(217,119,6,0.15);
+}
+.dark{
+  --bg:#0e1626;
+  --fg:#e2e8f0;
+  --muted:#94a3b8;
+  --card:#16233b;
+  --line:#27364f;
+  --head:#fde68a;
+  --gold-glow:rgba(245,158,11,0.25);
+}
+html{scroll-padding-top:calc(5rem + env(safe-area-inset-top,0px))}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--fg);transition:background-color .3s,color .3s}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:#0b1628;z-index:60}
+.card{background:var(--card);border:1px solid var(--line);transition:background-color .3s,border-color .3s}
+.muted{color:var(--muted)}
+.head{color:var(--head)}
+.gold-text{background:linear-gradient(135deg,#fbbf24,#d97706 60%,#b45309);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.pattern{background-color:#0b1628;background-image:radial-gradient(rgba(217,119,6,.22) 1.2px,transparent 0);background-size:28px 28px}
+.tab-active{background-color:#d97706 !important;color:#ffffff !important;border-color:#d97706 !important}
+.today-highlight{box-shadow:0 0 0 2px #f59e0b, 0 4px 20px var(--gold-glow)}
+</style>
+</head>
+<body class="antialiased">
+
+<!-- Navigation Header -->
+<header class="sticky z-50 bg-navy-900 text-white shadow-lg border-b border-gold-500/30" style="top:env(safe-area-inset-top,0px)">
+  <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+    <a href="#home" class="flex items-center gap-3">
+      <img src="1000244170.jpg" onerror="this.src='https://placehold.co/100x100/0b1628/f59e0b?text=RNLC'" alt="Rehoboth New Life Ministries Logo" class="w-10 h-10 rounded-full object-cover border-2 border-gold-500 shadow-sm bg-white">
+      <div>
+        <span class="font-serif font-bold text-lg md:text-xl tracking-wide block gold-text leading-tight">Rehoboth</span>
+        <span class="text-[10px] md:text-xs text-gray-300 block tracking-wider uppercase" data-i18n="navSub">New Life Church</span>
+      </div>
+    </a>
+    
+    <!-- Desktop Navigation Links -->
+    <nav class="hidden md:flex items-center gap-6 text-sm font-medium">
+      <a href="#about" class="hover:text-gold-400 transition-colors" data-i18n="menuAbout">About Us</a>
+      <a href="#services" class="hover:text-gold-400 transition-colors" data-i18n="menuServices">Service Timings</a>
+      <a href="#leadership" class="hover:text-gold-400 transition-colors" data-i18n="menuLeadership">Leadership</a>
+      <a href="#contact" class="hover:text-gold-400 transition-colors" data-i18n="menuPrayer">Prayer Request</a>
+      <a href="#contact" class="hover:text-gold-400 transition-colors" data-i18n="menuContact">Contact</a>
+    </nav>
+
+    <!-- Language Selector, Theme Switcher & CTA -->
+    <div class="flex items-center gap-2 md:gap-3">
+      <!-- Language Dropdown -->
+      <select id="langSelect" onchange="changeLanguage(this.value)" aria-label="Select Language" class="bg-navy-950 text-gold-400 border border-gold-500/40 text-xs font-semibold rounded-lg px-2 py-1.5 focus:outline-none focus:border-gold-500 cursor-pointer">
+        <option value="en" selected>ENGLISH</option>
+        <option value="ta">தமிழ் (Tamil)</option>
+        <option value="ml">മലയാളം (Malayalam)</option>
+      </select>
+
+      <button id="themeToggleBtn" aria-label="Toggle Dark/Light Mode" class="p-2 rounded-full border border-gray-700 hover:border-gold-500 text-gray-300 hover:text-white transition-colors">
+        <span id="themeIcon">☀️</span>
+      </button>
+
+      <a href="#services" class="hidden sm:inline-block bg-gold-500 hover:bg-gold-600 text-navy-950 font-semibold text-xs md:text-sm px-4 py-2 rounded-full transition-colors shadow" data-i18n="scheduleBtn">
+        Weekly Schedule
+      </a>
+    </div>
+  </div>
+</header>
+
+<main id="home">
+  <!-- Hero Section -->
+  <section class="pattern text-white py-16 md:py-28 border-b border-gold-500/20">
+    <div class="max-w-4xl mx-auto px-4 text-center">
+      <div class="mb-6 flex justify-center">
+        <img src="./pictures/WhatsApp Image 2026-10-22 at 5.22.26 PM.jpeg" onerror="this.src='https://placehold.co/200x200/0b1628/f59e0b?text=RNLC+Logo'" alt="Rehoboth New Life Ministries Official Logo" class="w-32 h-32 md:w-40 md:h-40 rounded-full object-cover border-4 border-gold-500 shadow-2xl ring-4 ring-gold-500/20 bg-white">
+      </div>
+      <span class="inline-block px-3 py-1 bg-gold-500/10 border border-gold-500/30 text-gold-400 rounded-full text-xs font-semibold uppercase tracking-wider mb-6" data-i18n="heroLocation">
+        Melpuram, Pacode Post • Kanyakumari District
+      </span>
+      <h1 class="font-serif text-3xl md:text-6xl font-extrabold mb-6 leading-tight">
+        <span data-i18n="heroWelcome">Welcome to</span> <br><span class="gold-text">Rehoboth New Life Church</span>
+      </h1>
+      <p class="text-gray-300 text-base md:text-xl mb-8 max-w-2xl mx-auto leading-relaxed" data-i18n="heroDesc">
+        A spirit-filled sanctuary dedicated to praise, worship, biblical fellowship, and intercessory prayer under the ministry of Pastor Sathyadas.
+      </p>
+      <img src="./pictures/WhatsApp Image 2026-10-22 at 5.23.48 PM.jpeg" alt="" style="border-radius: 20%; height: 230px; margin-left:360px; margin-top: -20px; object-fit: cover;">
+
+      <!-- Today's Service Dynamic Banner -->
+       <div>
+        <h1 style="font-size: 50px; margin-left: -390px; color: #d97706; font-family: Georgia, 'Times New Roman', Times, serif;">Our Pastors</h1>
+       <img src="./pictures/WhatsApp Image 2026-10-22 at 5.25.49 PM.jpeg" style="border-radius: 50%; height: 200px; margin-left: 180px;">
+       <h2 style="margin-left: -370px;">Assistant pastor </h2>
+       <h1 style="color: #d97706; margin-left: -370px;">JEBIN JOSHUA</h1>
+       <img src="./pictures/WhatsApp Image 2026-10-22 at 5.25.49 PM img.jpeg" style="border-radius: 50%; height: 200px; margin-left: 500px; margin-top: -240px;" >
+    <p style="margin-left: 270px;">Branch Pastor</p>
+    <h3 style="color: #d97706; margin-left: 270px;">RAJ KUMAR</h3>
+    </div>
+      <div  style="margin-top: 50px;" id="todayAlert" class="mb-10 max-w-xl mx-auto p-4 rounded-xl bg-navy-800/90 border border-gold-500/40 backdrop-blur text-left flex items-center gap-4 shadow-lg">
+        <div class="text-3xl shrink-0" aria-hidden="true">🔔</div>
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-gold-400 block" id="todayDayName" data-i18n="todayGathering">Today's Gathering</span>
+          <p class="text-sm text-gray-100 font-medium" id="todayServiceDetails">Loading today's schedule...</p>
+        </div>
+      </div>
+
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a href="#services" class="w-full sm:w-auto bg-gold-500 hover:bg-gold-600 text-navy-950 font-bold px-8 py-3.5 rounded-lg transition-colors shadow-lg text-center" data-i18n="viewTimingsBtn">
+          View All Timings
+        </a>
+        <a href="#contact" class="w-full sm:w-auto border border-white/20 hover:bg-white/10 text-white font-medium px-8 py-3.5 rounded-lg transition-colors text-center" data-i18n="submitPrayerBtn">
+          Submit Prayer Request
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Complete Weekly Service Schedule Section -->
+  <section id="services" class="py-16 md:py-24 max-w-6xl mx-auto px-4">
+    <div class="text-center mb-10">
+      <span class="text-xs font-bold uppercase tracking-widest text-gold-600 dark:text-gold-400" data-i18n="scheduleBadge">Weekly Schedule</span>
+      <h2 class="font-serif text-2xl md:text-4xl font-bold head mt-1 mb-4" data-i18n="scheduleTitle">Church Service Timings</h2>
+      <p class="muted max-w-xl mx-auto text-sm md:text-base" data-i18n="scheduleSubtitle">Join our congregation for worship, systematic Bible teaching, and united prayer throughout the week.</p>
+    </div>
+
+    <!-- Interactive Day Filter Tabs -->
+    <div class="flex flex-wrap items-center justify-center gap-2 mb-10" id="dayTabs">
+      <button onclick="filterSchedule('ALL', event)" class="tab-btn tab-active px-4 py-2 text-xs md:text-sm font-semibold rounded-full border border-gray-300 dark:border-gray-700 transition-all" data-i18n="tabAll">All Days</button>
+      <button onclick="filterSchedule('SUN', event)" class="tab-btn px-4 py-2 text-xs md:text-sm font-semibold rounded-full border border-gray-300 dark:border-gray-700 hover:border-gold-500 transition-all" data-i18n="tabSun">Sunday</button>
+      <button onclick="filterSchedule('WED', event)" class="tab-btn px-4 py-2 text-xs md:text-sm font-semibold rounded-full border border-gray-300 dark:border-gray-700 hover:border-gold-500 transition-all" data-i18n="tabWed">Wednesday</button>
+      <button onclick="filterSchedule('FRI', event)" class="tab-btn px-4 py-2 text-xs md:text-sm font-semibold rounded-full border border-gray-300 dark:border-gray-700 hover:border-gold-500 transition-all" data-i18n="tabFri">Friday</button>
+      <button onclick="filterSchedule('SAT', event)" class="tab-btn px-4 py-2 text-xs md:text-sm font-semibold rounded-full border border-gray-300 dark:border-gray-700 hover:border-gold-500 transition-all" data-i18n="tabSat">Saturday</button>
+    </div>
+
+    <!-- Service Timings Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="scheduleGrid">
+      
+      <!-- Sunday 1: Sabbath School -->
+      <div class="card rounded-2xl p-6 relative overflow-hidden shadow-sm hover:shadow-md transition-all schedule-card" data-day="SUN">
+        <div class="flex items-center justify-between mb-4">
+          <span class="text-xs font-bold px-3 py-1 bg-amber-500/10 text-amber-600 dark:text-amber-400 rounded-full uppercase tracking-wider" data-i18n="sunMorn">Sunday Morning</span>
+          <span class="text-xl" aria-hidden="true">☀️</span>
+        </div>
+        <h3 class="font-serif font-bold text-xl head mb-1" data-i18n="s1Title">Sabbath School</h3>
+        <p class="text-2xl font-black text-gold-600 dark:text-gold-400 mb-3">8:30 AM</p>
+        <p class="muted text-sm leading-relaxed" data-i18n="s1Desc">Systematic Bible lessons and spiritual foundational education for children and adults.</p>
+      </div>
+
+      <!-- Sunday 2: Holy Worship Service -->
+      <div class="card rounded-2xl p-6 relative overflow-hidden shadow-sm hover:shadow-md transition-all schedule-card border-gold-500/40" data-day="SUN">
+        <div class="flex items-center justify-between mb-4">
+          <span class="text-xs font-bold px-3 py-1 bg-amber-500/10 text-amber-600 dark:text-amber-400 rounded-full uppercase tracking-wider" data-i18n="sunMain">Sunday Main</span>
+          <span class="text-xl" aria-hidden="true">⛪</span>
+        </div>
+        <h3 class="font-serif font-bold text-xl head mb-1" data-i18n="s2Title">Holy Worship Service</h3>
+        <p class="text-2xl font-black text-gold-600 dark:text-gold-400 mb-3">10:00 AM</p>
+        <p class="muted text-sm leading-relaxed" data-i18n="s2Desc">Our main congregational service with vibrant praise, worship, communion, and anointed preaching.</p>
+      </div>
+
+      <!-- Sunday 3: Youth Meeting -->
+      <div class="card rounded-2xl p-6 relative overflow-hidden shadow-sm hover:shadow-md transition-all schedule-card" data-day="SUN">
+        <div class="flex items-center justify-between mb-4">
+          <span class="text-xs font-bold px-3 py-1 bg-amber-500/10 text-amber-600 dark:text-amber-400 rounded-full uppercase tracking-wider" data-i18n="sunAft">Sunday Afternoon</span>
+          <span class="text-xl" aria-hidden="true">🔥</span>
+        </div>
+        <h3 class="font-serif font-bold text-xl head mb-1" data-i18n="s3Title">Youth Meeting</h3>
+        <p class="text-2xl font-black text-gold-600 dark:text-gold-400 mb-3">2:00 PM</p>
+        <p class="muted text-sm leading-relaxed" data-i18n="s3Desc">Empowering youth gathering focused on leadership, praise music, and biblical worldview.</p>
+      </div>
+
+      <!-- Wednesday 1: Women's Meeting -->
+      <div class="card rounded-2xl p-6 relative overflow-hidden shadow-sm hover:shadow-md transition-all schedule-card" data-day="WED">
+        <div class="flex items-center justify-between mb-4">
+          <span class="text-xs font-bold px-3 py-1 bg-purple-500/10 text-purple-600 dark:text-purple-400 rounded-full uppercase tracking-wider" data-i18n="wedMorn">Wednesday Morning</span>
+          <span class="text-xl" aria-hidden="true">👩</span>
+        </div>
+        <h3 class="font-serif font-bold text-xl head mb-1" data-i18n="s4Title">Women's Meeting</h3>
+        <p class="text-2xl font-black text-gold-600 dark:text-gold-400 mb-3">10:30 AM</p>
+        <p class="muted text-sm leading-relaxed" data-i18n="s4Desc">Fellowship, intercessory prayer, and encouragement for women in family and spiritual life.</p>
+      </div>
+
+      <!-- Wednesday 2: Bible Study -->
+      <div class="card rounded-2xl p-6 relative overflow-hidden shadow-sm hover:shadow-md transition-all schedule-card" data-day="WED">
+        <div class="flex items-center justify-between mb-4">
+          <span class="text-xs font-bold px-3 py-1 bg-purple-500/10 text-purple-600 dark:text-purple-400 rounded-full uppercase tracking-wider" data-i18n="wedEve">Wednesday Evening</span>
+          <span class="text-xl" aria-hidden="true">📖</span>
+        </div>
+        <h3 class="font-serif font-bold text-xl head mb-1" data-i18n="s5Title">Bible Study</h3>
+        <p class="text-2xl font-black text-gold-600 dark:text-gold-400 mb-3">7:00 PM</p>
+        <p class="muted text-sm leading-relaxed" data-i18n="s5Desc">In-depth verse-by-verse exposition of Scripture and practical Christian doctrine.</p>
+      </div>
+
+      <!-- Friday 1: Fasting Prayer -->
+      <div class="card rounded-2xl p-6 relative overflow-hidden shadow-sm hover:shadow-md transition-all schedule-card" data-day="FRI">
+        <div class="flex items-center justify-between mb-4">
+          <span class="text-xs font-bold px-3 py-1 bg-rose-500/10 text-rose-600 dark:text-rose-400 rounded-full uppercase tracking-wider" data-i18n="friMorn">Friday Morning</span>
+          <span class="text-xl" aria-hidden="true">🙏</span>
+        </div>
+        <h3 class="font-serif font-bold text-xl head mb-1" data-i18n="s6Title">Fasting Prayer</h3>
+        <p class="text-2xl font-black text-gold-600 dark:text-gold-400 mb-3">10:30 AM</p>
+        <p class="muted text-sm leading-relaxed" data-i18n="s6Desc">Fasting and intensive intercession for personal, family, church, and community needs.</p>
+      </div>
+
+      <!-- Friday 2: Friday Night Meeting -->
+      <div class="card rounded-2xl p-6 relative overflow-hidden shadow-sm hover:shadow-md transition-all schedule-card" data-day="FRI">
+        <div class="flex items-center justify-between mb-4">
+          <span class="text-xs font-bold px-3 py-1 bg-rose-500/10 text-rose-600 dark:text-rose-400 rounded-full uppercase tracking-wider" data-i18n="friEve">Friday Evening</span>
+          <span class="text-xl" aria-hidden="true">🌙</span>
+        </div>
+        <h3 class="font-serif font-bold text-xl head mb-1" data-i18n="s7Title">Friday Night Meeting</h3>
+        <p class="text-2xl font-black text-gold-600 dark:text-gold-400 mb-3">7:00 PM</p>
+        <p class="muted text-sm leading-relaxed" data-i18n="s7Desc">Evening worship, testimony sharing, and spiritual preparation for the weekend.</p>
+      </div>
+
+      <!-- Saturday: Brothers' Prayer -->
+      <div class="card rounded-2xl p-6 relative overflow-hidden shadow-sm hover:shadow-md transition-all schedule-card" data-day="SAT">
+        <div class="flex items-center justify-between mb-4">
+          <span class="text-xs font-bold px-3 py-1 bg-blue-500/10 text-blue-600 dark:text-blue-400 rounded-full uppercase tracking-wider" data-i18n="satEve">Saturday Evening</span>
+          <span class="text-xl" aria-hidden="true">🤝</span>
+        </div>
+        <h3 class="font-serif font-bold text-xl head mb-1" data-i18n="s8Title">Brothers' Prayer</h3>
+        <p class="text-2xl font-black text-gold-600 dark:text-gold-400 mb-3">7:00 PM</p>
+        <p class="muted text-sm leading-relaxed" data-i18n="s8Desc">Men's prayer fellowship seeking godly leadership, strength, and mutual encouragement.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="py-16 md:py-24 bg-gray-50/50 dark:bg-navy-900/40 border-y border-line">
+    <div class="max-w-5xl mx-auto px-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-widest text-gold-600 dark:text-gold-400" data-i18n="aboutBadge">About Rehoboth</span>
+          <h2 class="font-serif text-2xl md:text-4xl font-bold head mt-1 mb-6" data-i18n="aboutTitle">Our Mission & Community</h2>
+          <p class="muted text-sm md:text-base leading-relaxed mb-4" data-i18n="aboutText1">
+            Rehoboth New Life Church (Rehoboth New Life Ministries) in Melpuram, Pacode is a spirit-filled church family committed to preaching the uncompromised Word of God.
+          </p>
+          <p class="muted text-sm md:text-base leading-relaxed mb-6" data-i18n="aboutText2">
+            We focus on strengthening families, encouraging youth, upholding prayer ministry, and reaching the wider Kanyakumari district with the gospel of hope and salvation.
+          </p>
+          <ul class="space-y-3 text-sm font-medium head">
+            <li class="flex items-center gap-3">
+              <span class="text-gold-500">✓</span> <span data-i18n="aboutPoint1">Bible-centered Teaching & Worship</span>
+            </li>
+            <li class="flex items-center gap-3">
+              <span class="text-gold-500">✓</span> <span data-i18n="aboutPoint2">Active Youth, Women's, and Men's Fellowships</span>
+            </li>
+            <li class="flex items-center gap-3">
+              <span class="text-gold-500">✓</span> <span data-i18n="aboutPoint3">Weekly Fasting & Intercessory Prayer Meetings</span>
+            </li>
+          </ul>
+        </div>
+        <div class="card p-8 rounded-2xl shadow-md border-gold-500/20 pattern text-white text-center">
+          <div class="mb-4 flex justify-center">
+            <img src="1000244170.jpg" onerror="this.src='https://placehold.co/120x120/0b1628/f59e0b?text=RNLC'" alt="Ministry Logo" class="w-20 h-20 rounded-full object-cover border-2 border-gold-500 shadow-md bg-white">
+          </div>
+          <h3 class="font-serif font-bold text-2xl mb-3 gold-text" data-i18n="scriptureTitle">Scriptural Foundation</h3>
+          <blockquote class="italic text-gray-300 text-sm md:text-base leading-relaxed mb-4" data-i18n="scriptureQuote">
+            "He named it Rehoboth, saying, 'Now the LORD has given us room and we will flourish in the land.'"
+          </blockquote>
+          <p class="text-xs text-gold-400 font-semibold uppercase tracking-wider" data-i18n="scriptureRef">— Genesis 26:22</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Leadership Section -->
+  <section id="leadership" class="py-16 md:py-24 max-w-6xl mx-auto px-4">
+    <div class="max-w-4xl mx-auto text-center">
+      <span class="text-xs font-bold uppercase tracking-widest text-gold-600 dark:text-gold-400" data-i18n="leadBadge">Pastoral Care</span>
+      <h2 class="font-serif text-2xl md:text-4xl font-bold head mt-1 mb-4" data-i18n="leadTitle">Church Leadership</h2>
+      <p class="muted max-w-lg mx-auto text-sm md:text-base mb-12" data-i18n="leadSubtitle">Guiding our church family with faithful leadership and pastoral counseling.</p>
+
+      <div class="card max-w-2xl mx-auto p-8 rounded-2xl shadow-lg border-gold-500/30 flex flex-col md:flex-row items-center gap-6 text-left">
+        <div class="shrink-0 text-center">
+          <div class="w-28 h-28 rounded-full border-4 border-gold-500/40 p-1 bg-navy-900 mx-auto overflow-hidden">
+            <img src="1000244170.jpg" onerror="this.src='https://placehold.co/150x150/0b1628/f59e0b?text=Pastor'" alt="Pastor Sathyadas" class="w-full h-full rounded-full object-cover">
+          </div>
+        </div>
+        <div>
+          <span class="text-xs font-bold text-gold-500 uppercase tracking-widest" data-i18n="pastorRole">Senior Pastor</span>
+          <h3 class="font-serif text-2xl font-bold head mb-2" data-i18n="pastorName">Pastor Sathyadas</h3>
+          <p class="muted text-sm leading-relaxed mb-4" data-i18n="pastorBio">
+            Dedicated to spiritual shepherdship, passionate gospel preaching, and praying for the sick and needy in Melpuram and surrounding regions.
+          </p>
+          <a href="#contact" class="inline-flex items-center gap-2 text-xs font-bold text-gold-500 hover:text-gold-400 uppercase tracking-wider" data-i18n="contactPastor">
+            Request Pastoral Support &rarr;
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Prayer Request & Contact Section -->
+  <section id="contact" class="py-16 md:py-24 bg-gray-50/50 dark:bg-navy-900/40 border-t border-line">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        
+        <!-- Interactive Prayer Request Form -->
+        <div class="card p-6 md:p-8 rounded-2xl shadow-lg border-gold-500/20">
+          <div class="mb-6">
+            <span class="text-xs font-bold uppercase tracking-widest text-gold-600 dark:text-gold-400" data-i18n="prayerBadge">Intercessory Support</span>
+            <h2 class="font-serif text-2xl md:text-3xl font-bold head mt-1" data-i18n="prayerTitle">Send a Prayer Request</h2>
+            <p class="muted text-sm mt-1" data-i18n="prayerSubtitle">Our pastoral team will stand with you in faithful prayer.</p>
+          </div>
+
+          <form id="prayerForm" onsubmit="handlePrayerSubmit(event)" class="space-y-4">
+            <div>
+              <label class="block text-xs font-semibold uppercase tracking-wider mb-1 head" data-i18n="formName">Full Name</label>
+              <input type="text" id="pName" required class="w-full px-4 py-3 rounded-lg bg-gray-100 dark:bg-navy-950 border border-gray-300 dark:border-gray-700 text-sm focus:outline-none focus:border-gold-500 transition-colors" placeholder="John Doe">
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-semibold uppercase tracking-wider mb-1 head" data-i18n="formPhone">Phone / WhatsApp</label>
+                <input type="tel" id="pPhone" required class="w-full px-4 py-3 rounded-lg bg-gray-100 dark:bg-navy-950 border border-gray-300 dark:border-gray-700 text-sm focus:outline-none focus:border-gold-500 transition-colors" placeholder="+91 98765 43210">
+              </div>
+              <div>
+                <label class="block text-xs font-semibold uppercase tracking-wider mb-1 head" data-i18n="formLocation">City / Village</label>
+                <input type="text" id="pLocation" class="w-full px-4 py-3 rounded-lg bg-gray-100 dark:bg-navy-950 border border-gray-300 dark:border-gray-700 text-sm focus:outline-none focus:border-gold-500 transition-colors" placeholder="Melpuram">
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-xs font-semibold uppercase tracking-wider mb-1 head" data-i18n="formRequest">Prayer Intention</label>
+              <textarea id="pMessage" rows="4" required class="w-full px-4 py-3 rounded-lg bg-gray-100 dark:bg-navy-950 border border-gray-300 dark:border-gray-700 text-sm focus:outline-none focus:border-gold-500 transition-colors" placeholder="Share your prayer need..."></textarea>
+            </div>
+
+            <button type="submit" class="w-full bg-gold-500 hover:bg-gold-600 text-navy-950 font-bold py-3.5 px-6 rounded-lg transition-colors shadow" data-i18n="formSubmit">
+              Submit Request
+            </button>
+          </form>
+
+          <!-- Success Feedback Message Container -->
+          <div id="formFeedback" class="hidden mt-4 p-4 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 text-sm text-center font-medium">
+            <span data-i18n="prayerSuccess">Thank you. Your prayer request has been submitted successfully!</span>
+          </div>
+        </div>
+
+        <!-- Contact & Google Maps Integration -->
+        <div class="flex flex-col justify-between space-y-6">
+          <div class="card p-6 md:p-8 rounded-2xl shadow-lg border-gold-500/20">
+            <span class="text-xs font-bold uppercase tracking-widest text-gold-600 dark:text-gold-400" data-i18n="contactBadge">Visit & Connect</span>
+            <h2 class="font-serif text-2xl md:text-3xl font-bold head mt-1 mb-6" data-i18n="contactTitle">Church Location</h2>
+
+            <div class="space-y-4 text-sm">
+              <div class="flex items-start gap-4">
+                <span class="text-xl" aria-hidden="true">📍</span>
+                <div>
+                  <strong class="block head font-semibold" data-i18n="addressLabel">Address</strong>
+                  <p class="muted leading-relaxed" data-i18n="addressDetail">
+                    Rehoboth New Life Church<br>
+                    Melpuram, Pacode Post<br>
+                    Kanyakumari District, Tamil Nadu - 629168
+                  </p>
+                </div>
+              </div>
+
+              <div class="flex items-start gap-4">
+                <span class="text-xl" aria-hidden="true">👤</span>
+                <div>
+                  <strong class="block head font-semibold" data-i18n="ministerLabel">Minister-in-Charge</strong>
+                  <p class="muted" data-i18n="pastorName">Pastor Sathyadas</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Google Maps Embed -->
+          <div class="card rounded-2xl overflow-hidden shadow-lg border-gold-500/20 h-64 md:h-full relative min-h-[250px]">
+            <iframe 
+              title="Rehoboth New Life Church Map" 
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15792.839498226017!2d77.1685!3d8.3308!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zOMKwMTknNTAuOSJOIDc3wrAxMCcwNi42IkU!5e0!3m2!1sen!2sin!4v1680000000000" 
+              class="w-full h-full border-0 absolute inset-0" 
+              allowfullscreen="" 
+              loading="lazy" 
+              referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- Footer -->
+<footer class="bg-navy-950 text-gray-400 py-12 border-t border-gold-500/20">
+  <div class="max-w-6xl mx-auto px-4 text-center">
+    <div class="flex justify-center mb-4">
+      <img src="1000244170.jpg" onerror="this.src='https://placehold.co/80x80/0b1628/f59e0b?text=RNLC'" alt="Footer Logo" class="w-12 h-12 rounded-full object-cover border border-gold-500 bg-white">
+    </div>
+    <p class="font-serif font-bold text-lg text-white mb-1">Rehoboth New Life Church</p>
+    <p class="text-xs text-gold-400 uppercase tracking-widest mb-6">Melpuram, Pacode</p>
+
+    <p class="text-xs text-gray-500 max-w-md mx-auto leading-relaxed mb-6" data-i18n="footerText">
+      "Now the LORD has given us room and we will flourish in the land." — Genesis 26:22
+    </p>
+
+    <div class="border-t border-gray-800 pt-6 text-xs text-gray-500">
+      &copy; <span id="year"></span> Rehoboth New Life Ministries. All rights reserved.
+    </div>
+  </div>
+</footer>
+
+<script>
+// --- Multi-Language Translations ---
+const i18n = {
+  en: {
+    navSub: "New Life Church",
+    menuAbout: "About Us",
+    menuServices: "Service Timings",
+    menuLeadership: "Leadership",
+    menuPrayer: "Prayer Request",
+    menuContact: "Contact",
+    scheduleBtn: "Weekly Schedule",
+    heroLocation: "Melpuram, Pacode Post • Kanyakumari District",
+    heroWelcome: "Welcome to",
+    heroDesc: "A spirit-filled sanctuary dedicated to praise, worship, biblical fellowship, and intercessory prayer under the ministry of Pastor Sathyadas.",
+    todayGathering: "Today's Gathering",
+    viewTimingsBtn: "View All Timings",
+    submitPrayerBtn: "Submit Prayer Request",
+    scheduleBadge: "Weekly Schedule",
+    scheduleTitle: "Church Service Timings",
+    scheduleSubtitle: "Join our congregation for worship, systematic Bible teaching, and united prayer throughout the week.",
+    tabAll: "All Days",
+    tabSun: "Sunday",
+    tabWed: "Wednesday",
+    tabFri: "Friday",
+    tabSat: "Saturday",
+    sunMorn: "Sunday Morning",
+    s1Title: "Sabbath School",
+    s1Desc: "Systematic Bible lessons and spiritual foundational education for children and adults.",
+    sunMain: "Sunday Main",
+    s2Title: "Holy Worship Service",
+    s2Desc: "Our main congregational service with vibrant praise, worship, communion, and anointed preaching.",
+    sunAft: "Sunday Afternoon",
+    s3Title: "Youth Meeting",
+    s3Desc: "Empowering youth gathering focused on leadership, praise music, and biblical worldview.",
+    wedMorn: "Wednesday Morning",
+    s4Title: "Women's Meeting",
+    s4Desc: "Fellowship, intercessory prayer, and encouragement for women in family and spiritual life.",
+    wedEve: "Wednesday Evening",
+    s5Title: "Bible Study",
+    s5Desc: "In-depth verse-by-verse exposition of Scripture and practical Christian doctrine.",
+    friMorn: "Friday Morning",
+    s6Title: "Fasting Prayer",
+    s6Desc: "Fasting and intensive intercession for personal, family, church, and community needs.",
+    friEve: "Friday Evening",
+    s7Title: "Friday Night Meeting",
+    s7Desc: "Evening worship, testimony sharing, and spiritual preparation for the weekend.",
+    satEve: "Saturday Evening",
+    s8Title: "Brothers' Prayer",
+    s8Desc: "Men's prayer fellowship seeking godly leadership, strength, and mutual encouragement.",
+    aboutBadge: "About Rehoboth",
+    aboutTitle: "Our Mission & Community",
+    aboutText1: "Rehoboth New Life Church (Rehoboth New Life Ministries) in Melpuram, Pacode is a spirit-filled church family committed to preaching the uncompromised Word of God.",
+    aboutText2: "We focus on strengthening families, encouraging youth, upholding prayer ministry, and reaching the wider Kanyakumari district with the gospel of hope and salvation.",
+    aboutPoint1: "Bible-centered Teaching & Worship",
+    aboutPoint2: "Active Youth, Women's, and Men's Fellowships",
+    aboutPoint3: "Weekly Fasting & Intercessory Prayer Meetings",
+    scriptureTitle: "Scriptural Foundation",
+    scriptureQuote: '"He named it Rehoboth, saying, \'Now the LORD has given us room and we will flourish in the land.\'"',
+    scriptureRef: "— Genesis 26:22",
+    leadBadge: "Pastoral Care",
+    leadTitle: "Church Leadership",
+    leadSubtitle: "Guiding our church family with faithful leadership and pastoral counseling.",
+    pastorRole: "Senior Pastor",
+    pastorName: "Pastor Sathyadas",
+    pastorBio: "Dedicated to spiritual shepherdship, passionate gospel preaching, and praying for the sick and needy in Melpuram and surrounding regions.",
+    contactPastor: "Request Pastoral Support →",
+    prayerBadge: "Intercessory Support",
+    prayerTitle: "Send a Prayer Request",
+    prayerSubtitle: "Our pastoral team will stand with you in faithful prayer.",
+    formName: "Full Name",
+    formPhone: "Phone / WhatsApp",
+    formLocation: "City / Village",
+    formRequest: "Prayer Intention",
+    formSubmit: "Submit Request",
+    prayerSuccess: "Thank you. Your prayer request has been submitted successfully!",
+    contactBadge: "Visit & Connect",
+    contactTitle: "Church Location",
+    addressLabel: "Address",
+    addressDetail: "Rehoboth New Life Church\nMelpuram, Pacode Post\nKanyakumari District, Tamil Nadu - 629168",
+    ministerLabel: "Minister-in-Charge",
+    footerText: '"Now the LORD has given us room and we will flourish in the land." — Genesis 26:22',
+    noServiceToday: "No scheduled public services today. Join us for our upcoming weekly gatherings!"
+  },
+  ta: {
+    navSub: "நியூ லைஃப் சர்ச்",
+    menuAbout: "எங்களைப் பற்றி",
+    menuServices: "ஆராதனை நேரங்கள்",
+    menuLeadership: "தலைமைத்துவம்",
+    menuPrayer: "ஜெப விண்ணப்பம்",
+    menuContact: "தொடர்புக்கு",
+    scheduleBtn: "வாராந்திர அட்டவணை",
+    heroLocation: "மேல்புறம், பாகோடு அஞ்சல் • கன்னியாகுமரி மாவட்டம்",
+    heroWelcome: "வரவேற்கிறது",
+    heroDesc: "போதகர் சத்தியதாஸ் அவர்களின் தலைமையில் துதி, ஆராதனை, வேத வசனம் மற்றும் ஜெபத்திற்காக அர்ப்பணிக்கப்பட்ட ஆவிக்குரிய ஆலயம்.",
+    todayGathering: "இன்றைய ஆராதனை",
+    viewTimingsBtn: "அனைத்து நேரங்களையும் காண்க",
+    submitPrayerBtn: "ஜெப விண்ணப்பம் அனுப்ப",
+    scheduleBadge: "வாராந்திர அட்டவணை",
+    scheduleTitle: "ஆராதனை நேரங்கள்",
+    scheduleSubtitle: "வாரம் முழுவதும் நடைபெறும் எங்களது ஆராதனைகள் மற்றும் ஜெபக்கூட்டங்களில் கலந்து கொள்ளுங்கள்.",
+    tabAll: "அனைத்து நாட்களும்",
+    tabSun: "ஞாயிறு",
+    tabWed: "புதன்",
+    tabFri: "வெள்ளி",
+    tabSat: "சனி",
+    sunMorn: "ஞாயிறு காலை",
+    s1Title: "சபைத் பள்ளி (Sabbath School)",
+    s1Desc: "சிறுவர்கள் மற்றும் பெரியவர்களுக்கான வேத பாடங்கள் மற்றும் ஆவிக்குரிய அடிப்படைப் பயிற்சி.",
+    sunMain: "ஞாயிறு முதன்மை ஆராதனை",
+    s2Title: "பரிசுத்த ஆராதனை",
+    s2Desc: "துதி ஆராதனை, திருவிருந்து மற்றும் தேவ செய்தி அடங்கிய முதன்மை ஞாயிறு ஆராதனை.",
+    sunAft: "ஞாயிறு மதியம்",
+    s3Title: "வாலிபர் கூடுகை",
+    s3Desc: "இளைஞர்களின் ஆவிக்குரிய வளர்ச்சி மற்றும் தலைமையை ஊக்குவிக்கும் வாலிபர் கூடுகை.",
+    wedMorn: "புதன் காலை",
+    s4Title: "சகோதரிகள் கூடுகை",
+    s4Desc: "பெண்களின் குடும்ப மற்றும் ஆவிக்குரிய வாழ்விற்கான ஜெபம் மற்றும் ஐக்கியம்.",
+    wedEve: "புதன் மாலை",
+    s5Title: "வேத ஆராய்ச்சி",
+    s5Desc: "வேதாகமத்தை ஆழமாக கற்றுக்கொள்ளும் வேத ஆராய்ச்சி கூடுகை.",
+    friMorn: "வெள்ளி காலை",
+    s6Title: "உபவாச ஜெபம்",
+    s6Desc: "தனிப்பட்ட, குடும்ப மற்றும் சபை தேவைகளுக்காக செய்யப்படும் தீவிர உபவாச ஜெபம்.",
+    friEve: "வெள்ளி மாலை",
+    s7Title: "வெள்ளி இரவு கூடுகை",
+    s7Desc: "மாலை நேர ஆராதனை மற்றும் சாட்சிகள் பகிர்ந்துகொள்ளும் கூடுகை.",
+    satEve: "சனி மாலை",
+    s8Title: "சகோதரர்கள் ஜெபம்",
+    s8Desc: "ஆண்கள் கூடி ஜெபிக்கும் சிறப்பு ஜெபக்கூட்டம்.",
+    aboutBadge: "ரெகொபோத் பற்றி",
+    aboutTitle: "எங்கள் நோக்கம் & சபை",
+    aboutText1: "மேல்புறம் பாகோட்டில் அமைந்துள்ள ரெகொபோத் நியூ லைஃப் சர்ச் தேவ வசனத்தை உண்மையாக பிரசங்கிக்கும் ஆவிக்குரிய சபையாகும்.",
+    aboutText2: "குடும்பங்களை பலப்படுத்துதல், வாலிபர்களை வழிநடத்துதல் மற்றும் ஜெப ஊழியத்தின் மூலம் சுவிசேஷத்தை அறிவிப்பதே எங்களது முக்கிய நோக்கமாகும்.",
+    aboutPoint1: "வேதத்தை மையமாகக் கொண்ட போதனை மற்றும் ஆராதனை",
+    aboutPoint2: "வாலிபர், சகோதரிகள் மற்றும் சகோதரர் கூடுகைகள்",
+    aboutPoint3: "வாராந்திர உபவாச மற்றும் பரிந்துரை ஜெபங்கள்",
+    scriptureTitle: "வேத வசன ஆதாரம்",
+    scriptureQuote: '"கர்த்தர் நமக்கு இடம் உண்டாக்கினார், நாம் தேசத்தில் பலுகுவோம் என்று சொல்லி, அதற்கு ரெகொபோத் என்று பேரிட்டான்."',
+    scriptureRef: "— ஆதியாகமம் 26:22",
+    leadBadge: "சபை தலைமை",
+    leadTitle: "சபை போதகர்",
+    leadSubtitle: "உண்மையுள்ள ஊழியத்தின் மூலம் சபையை வழிநடத்தும் போதகர்.",
+    pastorRole: "முதன்மை போதகர்",
+    pastorName: "பாஸ்டர் சத்தியதாஸ்",
+    pastorBio: "மேல்புறம் மற்றும் சுற்றியுள்ள பகுதிகளில் ஆத்துமாக்களுக்காக பாரத்தோடு ஜெபித்து ஊழியஞ்செய்பவர்.",
+    contactPastor: "போதகரைத் தொடர்பு கொள்ள →",
+    prayerBadge: "ஜெப உதவி",
+    prayerTitle: "ஜெப விண்ணப்பம் அனுப்பவும்",
+    prayerSubtitle: "எங்கள் போதகர் மற்றும் ஜெபக்குழுவினர் உங்களுக்காக ஜெபிப்பார்கள்.",
+    formName: "முழு பெயர்",
+    formPhone: "தொலைபேசி / வாட்ஸ்அப்",
+    formLocation: "ஊர் / நகரம்",
+    formRequest: "ஜெப குறிப்பு",
+    formSubmit: "விண்ணப்பம் அனுப்புக",
+    prayerSuccess: "நன்றி! உங்கள் ஜெப விண்ணப்பம் வெற்றிகரமாக சமர்ப்பிக்கப்பட்டது.",
+    contactBadge: "முகவரி",
+    contactTitle: "ஆலய முகவரி",
+    addressLabel: "முகவரி",
+    addressDetail: "ரெகொபோத் நியூ லைஃப் சர்ச்\nமேல்புறம், பாகோடு அஞ்சல்\nகன்னியாகுமரி மாவட்டம், தமிழ்நாடு - 629168",
+    ministerLabel: "பொறுப்பு போதகர்",
+    footerText: '"கர்த்தர் நமக்கு இடம் உண்டாக்கினார், நாம் தேசத்தில் பலுகுவோம்." — ஆதியாகமம் 26:22',
+    noServiceToday: "இன்று வழக்கமான ஆராதனைகள் இல்லை. வரவிருக்கும் வாராந்திர கூடுகைகளில் கலந்து கொள்ளுங்கள்!"
+  },
+  ml: {
+    navSub: "ന്യൂ ലൈഫ് ചർച്ച്",
+    menuAbout: "ഞങ്ങളെക്കുറിച്ച്",
+    menuServices: "ആരാധനാ സമയങ്ങൾ",
+    menuLeadership: "നേതൃത്വം",
+    menuPrayer: "പ്രാർത്ഥനാ വിഷയം",
+    menuContact: "ബന്ധപ്പെടാൻ",
+    scheduleBtn: "ആഴ്ചയിലെ ക്രമം",
+    heroLocation: "മേൽപ്പുറം, പക്കോട് പോസ്റ്റ് • കന്യാകുമാരി ജില്ല",
+    heroWelcome: "സ്വാഗതം",
+    heroDesc: "പാസ്റ്റർ സത്യദാസിന്റെ നേതൃത്വത്തിൽ ആരാധനയ്ക്കും വചനപഠനത്തിനും പ്രാർത്ഥനയ്ക്കുമായി സമർപ്പിക്കപ്പെട്ട ആത്മീയ സഭ.",
+    todayGathering: "ഇന്നത്തെ ആരാധന",
+    viewTimingsBtn: "എല്ലാ സമയങ്ങളും കാണുക",
+    submitPrayerBtn: "പ്രാർത്ഥനാ വിഷയം അയക്കുക",
+    scheduleBadge: "ആഴ്ചയിലെ ക്രമം",
+    scheduleTitle: "ആരാധനാ സമയങ്ങൾ",
+    scheduleSubtitle: "ആഴ്ചയിലുടനീളമുള്ള ഞങ്ങളുടെ ആരാധനകളിലും പ്രാർത്ഥനാ യോഗങ്ങളിലും പങ്കുചേരുക.",
+    tabAll: "എല്ലാ ദിവസവും",
+    tabSun: "ഞായർ",
+    tabWed: "ബുധൻ",
+    tabFri: "വെള്ളി",
+    tabSat: "ശനി",
+    sunMorn: "ഞായർ രാവിലെ",
+    s1Title: "സബ്ബാത്ത് സ്കൂൾ",
+    s1Desc: "കുട്ടികൾക്കും മുതിർന്നവർക്കുമുള്ള ബൈബിൾ പഠനവും ആത്മീയ വിദ്യാഭ്യാസവും.",
+    sunMain: "ഞായറാഴ്ചത്തെ പ്രധാന ആരാധന",
+    s2Title: "വിശുദ്ധ ആരാധന",
+    s2Desc: "സ്തുതിപ്പാട്ടുകൾ, തിരുവത്താഴം, ദൈവവചനം എന്നിവ അടങ്ങിയ പ്രധാന ആരാധന.",
+    sunAft: "ഞായർ ഉച്ചയ്ക്ക്",
+    s3Title: "യൂത്ത് മീറ്റിംഗ്",
+    s3Desc: "യുവജനങ്ങളുടെ ആത്മീയ വളർച്ചയ്ക്കായുള്ള പ്രത്യേക യോഗം.",
+    wedMorn: "ബുധൻ രാവിലെ",
+    s4Title: "വനിതാ സമ്മേളനം",
+    s4Desc: "സ്ത്രീകൾക്കായുള്ള പ്രാർത്ഥനയും കൂട്ടായ്മയും.",
+    wedEve: "ബുധൻ വൈകുന്നേരം",
+    s5Title: "ബൈബിൾ പഠനം",
+    s5Desc: "ദൈവവചനം ആഴത്തിൽ പഠിക്കുന്നതിനുള്ള വചനപഠന യോഗം.",
+    friMorn: "വെള്ളി രാവിലെ",
+    s6Title: "ഉപവാസ പ്രാർത്ഥന",
+    s6Desc: "വ്യക്തിഗത, കുടുംബ, സഭാ ആവശ്യങ്ങൾക്കായുള്ള ഉപവാസ പ്രാർത്ഥന.",
+    friEve: "വെള്ളി വൈകുന്നേരം",
+    s7Title: "വെള്ളിയാഴ്ച രാത്രി യോഗം",
+    s7Desc: "സാക്ഷ്യങ്ങളും വൈകുന്നേരത്തെ ആരാധനയും അടങ്ങിയ യോഗം.",
+    satEve: "ശനി വൈകുന്നേരം",
+    s8Title: "സഹോദരന്മാരുടെ പ്രാർത്ഥന",
+    s8Desc: "പുരുഷന്മാർ ഒത്തുചേരുന്ന പ്രാർത്ഥനാ കൂട്ടായ്മ.",
+    aboutBadge: "റെഹോബോത്തിനെക്കുറിച്ച്",
+    aboutTitle: "ഞങ്ങളുടെ ലക്ഷ്യം",
+    aboutText1: "മേൽപ്പുറം പക്കോടിലുള്ള റെഹോബോത്ത് ന്യൂ ലൈഫ് ചർച്ച് ദൈവവചനം സത്യസന്ധമായി പ്രസംഗിക്കുന്ന ആത്മീയ സഭയാണ്.",
+    aboutText2: "കുടുംബങ്ങളെ ശക്തിപ്പെടുത്തുക, യുവാക്കളെ വഴിനടത്തുക, സുവിശേഷം അറിയിക്കുക എന്നിവയാണ് ഞങ്ങളുടെ ലക്ഷ്യം.",
+    aboutPoint1: "ബൈബിൾ അധിഷ്ഠിത പഠനവും ആരാധനയും",
+    aboutPoint2: "യൂത്ത്, വുമൻസ്, മെൻസ് കൂട്ടായ്മകൾ",
+    aboutPoint3: "പ്രതിവാര ഉപവാസ പ്രാർത്ഥനകൾ",
+    scriptureTitle: "വേദപുസ്തക വാക്യം",
+    scriptureQuote: '"യഹോവ ഇപ്പോൾ നമുക്ക് ഇടമുണ്ടാക്കി തന്നിരിക്കുന്നു; നാം ദേശത്ത് വർദ്ധിച്ചുവരും എന്ന് പറഞ്ഞ് അതിന് റെഹോബോത്ത് എന്ന് പേരിട്ടു."',
+    scriptureRef: "— ഉല്പത്തി 26:22",
+    leadBadge: "സഭാ നേതൃത്വം",
+    leadTitle: "സഭാ പാസ്റ്റർ",
+    leadSubtitle: "വിശ്വസ്തതയോടെ സഭയെ നയിക്കുന്ന നേതൃത്വം.",
+    pastorRole: "സീനിയർ പാസ്റ്റർ",
+    pastorName: "പാസ്റ്റർ സത്യദാസ്",
+    pastorBio: "മേൽപ്പുറത്തും പരിസരപ്രദേശങ്ങളിലും ആത്മീയ സേവനം അനുഷ്ഠിക്കുന്ന ദൈവദാസൻ.",
+    contactPastor: "പാസ്റ്ററുമായി ബന്ധപ്പെടാൻ →",
+    prayerBadge: "പ്രാർത്ഥനാ സഹായം",
+    prayerTitle: "പ്രാർത്ഥനാ വിഷയം അയക്കുക",
+    prayerSubtitle: "ഞങ്ങളുടെ പ്രാർത്ഥനാ സംഘം നിങ്ങൾക്കായി പ്രാർത്ഥിക്കും.",
+    formName: "പൂർണ്ണ പേര്",
+    formPhone: "ഫോൺ / വാട്ട്സ്ആപ്പ്",
+    formLocation: "സ്ഥലം",
+    formRequest: "പ്രാർത്ഥനാ വിഷയം",
+    formSubmit: "സമർപ്പിക്കുക",
+    prayerSuccess: "നന്ദി! നിങ്ങളുടെ പ്രാർത്ഥനാ വിഷയം സ്വീകരിച്ചിരിക്കുന്നു.",
+    contactBadge: "വിലാസം",
+    contactTitle: "പള്ളിയുടെ സ്ഥാനം",
+    addressLabel: "വിലാസം",
+    addressDetail: "റെഹോബോത്ത് ന്യൂ ലൈഫ് ചർച്ച്\nമേൽപ്പുറം, പക്കോട് പോസ്റ്റ്\nകന്യാകുമാരി ജില്ല, തമിഴ്നാട് - 629168",
+    ministerLabel: "പാസ്റ്റർ",
+    footerText: '"യഹോവ ഇപ്പോൾ നമുക്ക് ഇടമുണ്ടാക്കി തന്നിരിക്കുന്നു." — ഉല്പത്തി 26:22',
+    noServiceToday: "ഇന്ന് പൊതു ആരാധനകൾ ക്രമീകരിച്ചിട്ടില്ല. വരാനിരിക്കുന്ന യോഗങ്ങളിൽ പങ്കുചേരുക!"
+  }
+};
+
+let currentLang = 'en';
+
+// Change Language Function
+function changeLanguage(lang) {
+  if (!i18n[lang]) return;
+  currentLang = lang;
+  
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (i18n[lang][key]) {
+      if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+        el.placeholder = i18n[lang][key];
+      } else {
+        el.innerText = i18n[lang][key];
+      }
+    }
+  });
+
+  // Re-render today's banner schedule with selected language
+  updateTodaySchedule();
+}
+
+// Filter Service Timings Schedule
+function filterSchedule(day, event) {
+  const cards = document.querySelectorAll('.schedule-card');
+  const buttons = document.querySelectorAll('.tab-btn');
+
+  buttons.forEach(btn => btn.classList.remove('tab-active'));
+  if(event && event.target) {
+    event.target.classList.add('tab-active');
+  }
+
+  cards.forEach(card => {
+    if (day === 'ALL' || card.getAttribute('data-day') === day) {
+      card.style.display = 'block';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+
+// Update Today's Schedule Dynamic Banner
+function updateTodaySchedule() {
+  const daysMap = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
+  const todayCode = daysMap[new Date().getDay()];
+  
+  const todayCards = document.querySelectorAll(`.schedule-card[data-day="${todayCode}"]`);
+  const detailsEl = document.getElementById('todayServiceDetails');
+  const dayNameEl = document.getElementById('todayDayName');
+
+  const fullDayNames = {
+    SUN: i18n[currentLang].tabSun,
+    WED: i18n[currentLang].tabWed,
+    FRI: i18n[currentLang].tabFri,
+    SAT: i18n[currentLang].tabSat,
+    MON: "Monday",
+    TUE: "Tuesday",
+    THU: "Thursday"
+  };
+
+  dayNameEl.innerText = `${i18n[currentLang].todayGathering} (${fullDayNames[todayCode] || todayCode})`;
+
+  if (todayCards.length > 0) {
+    let summary = [];
+    todayCards.forEach(card => {
+      const title = card.querySelector('h3').innerText;
+      const time = card.querySelector('.text-2xl').innerText;
+      summary.push(`${title} @ ${time}`);
+    });
+    detailsEl.innerText = summary.join(' • ');
+  } else {
+    detailsEl.innerText = i18n[currentLang].noServiceToday;
+  }
+}
+
+// Handle Form Submission
+function handlePrayerSubmit(event) {
+  event.preventDefault();
+  const feedback = document.getElementById('formFeedback');
+  feedback.classList.remove('hidden');
+  document.getElementById('prayerForm').reset();
+
+  setTimeout(() => {
+    feedback.classList.add('hidden');
+  }, 5000);
+}
+
+// Theme Toggle Functionality
+const themeToggleBtn = document.getElementById('themeToggleBtn');
+const themeIcon = document.getElementById('themeIcon');
+
+function initTheme() {
+  // Default is dark mode
+  if (localStorage.getItem('theme') === 'light') {
+    document.documentElement.classList.remove('dark');
+    themeIcon.innerText = '🌙';
+  } else {
+    document.documentElement.classList.add('dark');
+    themeIcon.innerText = '☀️';
+  }
+}
+
+themeToggleBtn.addEventListener('click', () => {
+  const isDark = document.documentElement.classList.toggle('dark');
+  if (isDark) {
+    localStorage.setItem('theme', 'dark');
+    themeIcon.innerText = '☀️';
+  } else {
+    localStorage.setItem('theme', 'light');
+    themeIcon.innerText = '🌙';
+  }
+});
+
+// Set Copyright Year & Dynamic Init
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('year').innerText = new Date().getFullYear();
+  initTheme();
+  updateTodaySchedule();
+});
+</script>
+</body>
+</html>
